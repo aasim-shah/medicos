@@ -191,64 +191,65 @@ export default function AdminDashboard() {
 
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Admin Dashboard</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Admin Dashboard</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
               Manage your medical facility and staff
             </p>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Patients</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Patients</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.totalPatients.toLocaleString()}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.totalPatients.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">
                 +12% from last month
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Appointments Today</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Appointments Today</CardTitle>
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.appointmentsToday}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.appointmentsToday}</div>
               <p className="text-xs text-muted-foreground">
                 6 completed, 17 upcoming
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Labs</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Pending Labs</CardTitle>
               <TestTube className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.pendingLabs}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.pendingLabs}</div>
               <p className="text-xs text-muted-foreground">
                 2 urgent, 6 routine
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Prescriptions</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Prescriptions</CardTitle>
               <Pill className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.prescriptions}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.prescriptions}</div>
               <p className="text-xs text-muted-foreground">
                 +8% from last week
               </p>
@@ -257,23 +258,23 @@ export default function AdminDashboard() {
         </div>
 
         {/* Staff Management */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
+        <Card className="shadow-sm">
+          <CardHeader className="pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <CardTitle>Staff Management</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-lg sm:text-xl">Staff Management</CardTitle>
+                <CardDescription className="text-sm">
                   Manage medical staff and their roles
                 </CardDescription>
               </div>
               <Dialog open={isAddStaffOpen} onOpenChange={setIsAddStaffOpen}>
                 <DialogTrigger asChild>
-                  <Button>
+                  <Button className="w-full sm:w-auto">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Staff
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
                     <DialogTitle>Add New Staff Member</DialogTitle>
                     <DialogDescription>
@@ -281,14 +282,15 @@ export default function AdminDashboard() {
                     </DialogDescription>
                   </DialogHeader>
                   <form onSubmit={addStaffForm.handleSubmit(handleAddStaff)} className="space-y-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="name" className="text-right">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                      <Label htmlFor="name" className="text-right text-sm">
                         Name
                       </Label>
-                      <div className="col-span-3">
+                      <div className="sm:col-span-3">
                         <Input
                           {...addStaffForm.register('name')}
                           placeholder="Full name"
+                          className="w-full"
                         />
                         {addStaffForm.formState.errors.name && (
                           <p className="text-sm text-red-500 mt-1">
@@ -297,15 +299,16 @@ export default function AdminDashboard() {
                         )}
                       </div>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="email" className="text-right">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                      <Label htmlFor="email" className="text-right text-sm">
                         Email
                       </Label>
-                      <div className="col-span-3">
+                      <div className="sm:col-span-3">
                         <Input
                           {...addStaffForm.register('email')}
                           type="email"
                           placeholder="Email address"
+                          className="w-full"
                         />
                         {addStaffForm.formState.errors.email && (
                           <p className="text-sm text-red-500 mt-1">
@@ -314,13 +317,13 @@ export default function AdminDashboard() {
                         )}
                       </div>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="role" className="text-right">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                      <Label htmlFor="role" className="text-right text-sm">
                         Role
                       </Label>
-                      <div className="col-span-3">
+                      <div className="sm:col-span-3">
                         <Select onValueChange={(value) => addStaffForm.setValue('role', value as 'doctor' | 'nurse' | 'reception' | 'lab' | 'pharmacy' | 'admin')}>
-                          <SelectTrigger>
+                          <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select role" />
                           </SelectTrigger>
                           <SelectContent>
@@ -339,14 +342,15 @@ export default function AdminDashboard() {
                         )}
                       </div>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="department" className="text-right">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                      <Label htmlFor="department" className="text-right text-sm">
                         Department
                       </Label>
-                      <div className="col-span-3">
+                      <div className="sm:col-span-3">
                         <Input
                           {...addStaffForm.register('department')}
                           placeholder="Department"
+                          className="w-full"
                         />
                         {addStaffForm.formState.errors.department && (
                           <p className="text-sm text-red-500 mt-1">
@@ -355,14 +359,15 @@ export default function AdminDashboard() {
                         )}
                       </div>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="phone" className="text-right">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                      <Label htmlFor="phone" className="text-right text-sm">
                         Phone
                       </Label>
-                      <div className="col-span-3">
+                      <div className="sm:col-span-3">
                         <Input
                           {...addStaffForm.register('phone')}
                           placeholder="Phone number"
+                          className="w-full"
                         />
                         {addStaffForm.formState.errors.phone && (
                           <p className="text-sm text-red-500 mt-1">
@@ -371,17 +376,19 @@ export default function AdminDashboard() {
                         )}
                       </div>
                     </div>
-                    <div className="flex justify-end space-x-2">
+                    <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
                       <Button 
                         type="button" 
                         variant="outline" 
                         onClick={() => setIsAddStaffOpen(false)}
+                        className="w-full sm:w-auto"
                       >
                         Cancel
                       </Button>
                       <Button 
                         type="submit" 
                         disabled={createStaffMutation.isPending}
+                        className="w-full sm:w-auto"
                       >
                         {createStaffMutation.isPending ? (
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -396,14 +403,16 @@ export default function AdminDashboard() {
               </Dialog>
             </div>
           </CardHeader>
-          <CardContent>
-            <DataTable
-              data={staffData || []}
-              columns={staffColumns}
-              actions={staffActions}
-              searchPlaceholder="Search staff..."
-              loading={staffLoading}
-            />
+          <CardContent className="p-0 sm:p-6">
+            <div className="overflow-x-auto">
+              <DataTable
+                data={staffData || []}
+                columns={staffColumns}
+                actions={staffActions}
+                searchPlaceholder="Search staff..."
+                loading={staffLoading}
+              />
+            </div>
           </CardContent>
         </Card>
       </div>

@@ -6,7 +6,7 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'MedicoFlow - Medical Management System',
+  title: 'Medicos - Medical Management System',
   description: 'Comprehensive medical workflow management for healthcare facilities',
 }
 

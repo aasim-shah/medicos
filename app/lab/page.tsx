@@ -214,362 +214,294 @@ export default function LabDashboard() {
 
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Laboratory Dashboard</h1>
-            <p className="text-muted-foreground">
-              Manage lab tests and orders
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Laboratory Dashboard</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
+              Manage lab orders and test results
             </p>
           </div>
-          <Dialog open={isNewOrderOpen} onOpenChange={setIsNewOrderOpen}>
-            <DialogTrigger asChild>
-              <Button>
-                <Plus className="mr-2 h-4 w-4" />
-                New Lab Order
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[500px]">
-              <DialogHeader>
-                <DialogTitle>Create New Lab Order</DialogTitle>
-                <DialogDescription>
-                  Add a new laboratory test order for a patient.
-                </DialogDescription>
-              </DialogHeader>
-              <form onSubmit={newOrderForm.handleSubmit(handleCreateOrder)} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="patientId">Patient</Label>
-                    <Select onValueChange={(value) => newOrderForm.setValue('patientId', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select patient" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {patients.map((patient) => (
-                          <SelectItem key={patient.id} value={patient.id}>
-                            {patient.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {newOrderForm.formState.errors.patientId && (
-                      <p className="text-sm text-red-500 mt-1">
-                        {newOrderForm.formState.errors.patientId.message}
-                      </p>
-                    )}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <Button variant="outline" className="w-full sm:w-auto">
+              <Upload className="mr-2 h-4 w-4" />
+              Import Results
+            </Button>
+            <Button variant="outline" className="w-full sm:w-auto">
+              <Download className="mr-2 h-4 w-4" />
+              Export Report
+            </Button>
+            <Dialog open={isNewOrderOpen} onOpenChange={setIsNewOrderOpen}>
+              <DialogTrigger asChild>
+                <Button className="w-full sm:w-auto">
+                  <Plus className="mr-2 h-4 w-4" />
+                  New Lab Order
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Create New Lab Order</DialogTitle>
+                  <DialogDescription>
+                    Create a new laboratory test order.
+                  </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={newOrderForm.handleSubmit(handleCreateOrder)} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="patientId" className="text-sm">Patient</Label>
+                      <Select onValueChange={(value) => newOrderForm.setValue('patientId', value)}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select patient" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="patient1">John Smith</SelectItem>
+                          <SelectItem value="patient2">Sarah Wilson</SelectItem>
+                          <SelectItem value="patient3">Mike Chen</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="doctorId" className="text-sm">Doctor</Label>
+                      <Select onValueChange={(value) => newOrderForm.setValue('doctorId', value)}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select doctor" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="doctor1">Dr. Sarah Johnson</SelectItem>
+                          <SelectItem value="doctor2">Dr. Michael Brown</SelectItem>
+                          <SelectItem value="doctor3">Dr. Emily Rodriguez</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="testType" className="text-sm">Test Type</Label>
+                      <Select onValueChange={(value) => newOrderForm.setValue('testType', value)}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select test type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="cbc">Complete Blood Count</SelectItem>
+                          <SelectItem value="lipid">Lipid Panel</SelectItem>
+                          <SelectItem value="glucose">Glucose Test</SelectItem>
+                          <SelectItem value="urinalysis">Urinalysis</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="priority" className="text-sm">Priority</Label>
+                      <Select onValueChange={(value) => newOrderForm.setValue('priority', value as 'routine' | 'urgent' | 'emergency')}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select priority" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="routine">Routine</SelectItem>
+                          <SelectItem value="urgent">Urgent</SelectItem>
+                          <SelectItem value="emergency">Emergency</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="doctorId">Ordering Doctor</Label>
-                    <Select onValueChange={(value) => newOrderForm.setValue('doctorId', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select doctor" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {doctors.map((doctor) => (
-                          <SelectItem key={doctor.id} value={doctor.id}>
-                            {doctor.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {newOrderForm.formState.errors.doctorId && (
-                      <p className="text-sm text-red-500 mt-1">
-                        {newOrderForm.formState.errors.doctorId.message}
-                      </p>
-                    )}
+                    <Label htmlFor="notes" className="text-sm">Notes</Label>
+                    <Textarea
+                      {...newOrderForm.register('notes')}
+                      placeholder="Additional notes or instructions"
+                      rows={3}
+                      className="w-full"
+                    />
                   </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="testType">Test Type</Label>
-                    <Select onValueChange={(value) => newOrderForm.setValue('testType', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select test type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="blood">Blood Test</SelectItem>
-                        <SelectItem value="urine">Urine Analysis</SelectItem>
-                        <SelectItem value="xray">X-Ray</SelectItem>
-                        <SelectItem value="mri">MRI</SelectItem>
-                        <SelectItem value="ct">CT Scan</SelectItem>
-                        <SelectItem value="ecg">ECG</SelectItem>
-                        <SelectItem value="ultrasound">Ultrasound</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    {newOrderForm.formState.errors.testType && (
-                      <p className="text-sm text-red-500 mt-1">
-                        {newOrderForm.formState.errors.testType.message}
-                      </p>
-                    )}
+                  <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={() => setIsNewOrderOpen(false)}
+                      className="w-full sm:w-auto"
+                    >
+                      Cancel
+                    </Button>
+                    <Button 
+                      type="submit" 
+                      disabled={createLabOrderMutation.isPending}
+                      className="w-full sm:w-auto"
+                    >
+                      {createLabOrderMutation.isPending ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        <Plus className="mr-2 h-4 w-4" />
+                      )}
+                      Create Order
+                    </Button>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="priority">Priority</Label>
-                    <Select onValueChange={(value) => newOrderForm.setValue('priority', value as 'routine' | 'urgent' | 'emergency')}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select priority" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="routine">Routine</SelectItem>
-                        <SelectItem value="urgent">Urgent</SelectItem>
-                        <SelectItem value="emergency">Emergency</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    {newOrderForm.formState.errors.priority && (
-                      <p className="text-sm text-red-500 mt-1">
-                        {newOrderForm.formState.errors.priority.message}
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="notes">Notes</Label>
-                  <Textarea
-                    {...newOrderForm.register('notes')}
-                    placeholder="Additional notes or instructions"
-                    rows={3}
-                  />
-                </div>
-                <div className="flex justify-end space-x-2">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={() => setIsNewOrderOpen(false)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button 
-                    type="submit" 
-                    disabled={createLabOrderMutation.isPending}
-                  >
-                    {createLabOrderMutation.isPending ? (
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    ) : (
-                      <Plus className="mr-2 h-4 w-4" />
-                    )}
-                    Create Order
-                  </Button>
-                </div>
-              </form>
-            </DialogContent>
-          </Dialog>
+                </form>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Orders</CardTitle>
               <TestTube className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.totalOrders}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.totalOrders}</div>
               <p className="text-xs text-muted-foreground">
-                +12 this week
+                This month
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Tests</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Pending Tests</CardTitle>
               <Clock className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.pendingTests}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.pendingTests}</div>
               <p className="text-xs text-muted-foreground">
-                {mockStats.urgentTests} urgent
+                Awaiting processing
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Completed Today</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Completed Today</CardTitle>
               <CheckCircle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.completedToday}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.completedToday}</div>
               <p className="text-xs text-muted-foreground">
-                On schedule
+                Tests completed
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Urgent Tests</CardTitle>
-              <AlertCircle className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-xs sm:text-sm font-medium">Urgent Tests</CardTitle>
+              <AlertTriangle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.urgentTests}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.urgentTests}</div>
               <p className="text-xs text-muted-foreground">
-                Require attention
+                Require immediate attention
               </p>
             </CardContent>
           </Card>
         </div>
 
         {/* Main Content */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="orders">Lab Orders</TabsTrigger>
-            <TabsTrigger value="results">Test Results</TabsTrigger>
-            <TabsTrigger value="reports">Reports</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="orders" className="space-y-6">
-            {/* Filters */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Filters</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-4">
-                  <div className="flex items-center space-x-2">
-                    <Search className="h-4 w-4 text-muted-foreground" />
-                    <Input
-                      placeholder="Search orders..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-64"
-                    />
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Filter className="h-4 w-4 text-muted-foreground" />
-                    <Select value={statusFilter} onValueChange={setStatusFilter}>
-                      <SelectTrigger className="w-40">
-                        <SelectValue placeholder="All Status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="">All Status</SelectItem>
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="in-progress">In Progress</SelectItem>
-                        <SelectItem value="completed">Completed</SelectItem>
-                        <SelectItem value="cancelled">Cancelled</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Filter className="h-4 w-4 text-muted-foreground" />
-                    <Select value={priorityFilter} onValueChange={setPriorityFilter}>
-                      <SelectTrigger className="w-40">
-                        <SelectValue placeholder="All Priorities" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="">All Priorities</SelectItem>
-                        <SelectItem value="routine">Routine</SelectItem>
-                        <SelectItem value="urgent">Urgent</SelectItem>
-                        <SelectItem value="emergency">Emergency</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+        <Card className="shadow-sm">
+          <CardHeader className="pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <CardTitle className="text-lg sm:text-xl">Lab Orders</CardTitle>
+                <CardDescription className="text-sm">
+                  Manage laboratory test orders and results
+                </CardDescription>
+              </div>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search orders..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 w-full sm:w-64"
+                  />
                 </div>
-              </CardContent>
-            </Card>
-
-            {/* Lab Orders Table */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle>Lab Orders</CardTitle>
-                    <CardDescription>
-                      {filteredLabOrders.length} orders found
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Patient</TableHead>
-                      <TableHead>Test Type</TableHead>
-                      <TableHead>Ordering Doctor</TableHead>
-                      <TableHead>Priority</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Order Date</TableHead>
-                      <TableHead>Actions</TableHead>
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-full sm:w-40">
+                    <SelectValue placeholder="All Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">All Status</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="processing">Processing</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                    <SelectItem value="cancelled">Cancelled</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={priorityFilter} onValueChange={setPriorityFilter}>
+                  <SelectTrigger className="w-full sm:w-40">
+                    <SelectValue placeholder="All Priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">All Priority</SelectItem>
+                    <SelectItem value="routine">Routine</SelectItem>
+                    <SelectItem value="urgent">Urgent</SelectItem>
+                    <SelectItem value="emergency">Emergency</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="p-0 sm:p-6">
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">Order ID</TableHead>
+                    <TableHead>Patient</TableHead>
+                    <TableHead>Test Type</TableHead>
+                    <TableHead>Doctor</TableHead>
+                    <TableHead>Priority</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {labOrdersData?.map((order: any) => (
+                    <TableRow key={order.id}>
+                      <TableCell className="font-medium">{order.id}</TableCell>
+                      <TableCell>{order.patientName}</TableCell>
+                      <TableCell>{order.testType}</TableCell>
+                      <TableCell>{order.doctorName}</TableCell>
+                      <TableCell>{getPriorityBadge(order.priority)}</TableCell>
+                      <TableCell>{getStatusBadge(order.status, order.priority)}</TableCell>
+                      <TableCell>{format(new Date(order.createdAt), 'MMM dd, yyyy')}</TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => openViewDialog(order)}
+                            className="h-8 w-8 p-0"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => openEditDialog(order)}
+                            className="h-8 w-8 p-0"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => openDeleteDialog(order)}
+                            className="h-8 w-8 p-0"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
                     </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredLabOrders.map((order: any) => (
-                      <TableRow key={order.id}>
-                        <TableCell className="font-medium">{order.patientName}</TableCell>
-                        <TableCell>{order.testType}</TableCell>
-                        <TableCell>{order.doctorName}</TableCell>
-                        <TableCell>{getPriorityBadge(order.priority)}</TableCell>
-                        <TableCell>{getStatusBadge(order.status, order.priority)}</TableCell>
-                        <TableCell>
-                          {order.orderDate ? format(new Date(order.orderDate), 'MMM dd, yyyy') : 'N/A'}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center space-x-1">
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => openViewDialog(order)}
-                            >
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => openEditDialog(order)}
-                            >
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => openDeleteDialog(order)}
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="results" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Test Results</CardTitle>
-                <CardDescription>
-                  View and manage completed test results
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8 text-muted-foreground">
-                  <FileText className="h-12 w-12 mx-auto mb-4" />
-                  <p>Test results will appear here once tests are completed</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="reports" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Reports</CardTitle>
-                <CardDescription>
-                  Generate and view laboratory reports
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8 text-muted-foreground">
-                  <FileText className="h-12 w-12 mx-auto mb-4" />
-                  <p>Report generation functionality will be available here</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Edit Order Dialog */}

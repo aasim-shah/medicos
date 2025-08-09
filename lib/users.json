@@ -2,7 +2,7 @@
   "users": [
     {
       "id": "1",
-      "email": "admin@medicoflow.com",
+      "email": "admin@medicos.com",
       "password": "admin123",
       "name": "Admin User",
       "phone": "+1234567890",
@@ -16,7 +16,7 @@
     },
     {
       "id": "2",
-      "email": "doctor@medicoflow.com",
+      "email": "doctor@medicos.com",
       "password": "doctor123",
       "name": "Dr. Sarah Johnson",
       "phone": "+1234567891",
@@ -30,7 +30,7 @@
     },
     {
       "id": "3",
-      "email": "reception@medicoflow.com",
+      "email": "reception@medicos.com",
       "password": "reception123",
       "name": "Mike Chen",
       "phone": "+1234567892",
@@ -44,7 +44,7 @@
     },
     {
       "id": "4",
-      "email": "lab@medicoflow.com",
+      "email": "lab@medicos.com",
       "password": "lab123",
       "name": "Dr. Emily Rodriguez",
       "phone": "+1234567893",
@@ -58,7 +58,7 @@
     },
     {
       "id": "5",
-      "email": "pharmacy@medicoflow.com",
+      "email": "pharmacy@medicos.com",
       "password": "pharmacy123",
       "name": "Dr. James Wilson",
       "phone": "+1234567894",
@@ -72,7 +72,7 @@
     },
     {
       "id": "6",
-      "email": "patient@medicoflow.com",
+      "email": "patient@medicos.com",
       "password": "patient123",
       "name": "John Smith",
       "phone": "+1234567895",
@@ -87,13 +87,13 @@
   ],
   "tenant": {
     "id": "tenant1",
-    "name": "MedicoFlow Hospital",
+    "name": "Medicos Hospital",
     "logo": null,
     "primaryColor": "#3b82f6",
     "secondaryColor": "#1e40af",
     "address": "123 Medical Center Dr, Healthcare City, HC 12345",
     "phone": "+1 (555) 123-4567",
-    "email": "info@medicoflow.com",
-    "website": "https://medicoflow.com"
+    "email": "info@medicos.com",
+    "website": "https://medicos.com"
   }
 }

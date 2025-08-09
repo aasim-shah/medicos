@@ -203,22 +203,23 @@ export default function PatientDashboard() {
 
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Patient Dashboard</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Patient Dashboard</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
               Welcome back, {mockPatientData.name}
             </p>
           </div>
           <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
             <DialogTrigger asChild>
-              <Button>
+              <Button className="w-full sm:w-auto">
                 <Calendar className="mr-2 h-4 w-4" />
                 Book Appointment
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[500px]">
+            <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Book New Appointment</DialogTitle>
                 <DialogDescription>
@@ -226,11 +227,11 @@ export default function PatientDashboard() {
                 </DialogDescription>
               </DialogHeader>
               <form onSubmit={appointmentForm.handleSubmit(handleBookAppointment)} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="doctorId">Doctor</Label>
+                    <Label htmlFor="doctorId" className="text-sm">Doctor</Label>
                     <Select onValueChange={(value) => appointmentForm.setValue('doctorId', value)}>
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select doctor" />
                       </SelectTrigger>
                       <SelectContent>
@@ -243,9 +244,9 @@ export default function PatientDashboard() {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="appointmentType">Type</Label>
+                    <Label htmlFor="appointmentType" className="text-sm">Type</Label>
                     <Select onValueChange={(value) => appointmentForm.setValue('type', value)}>
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Appointment type" />
                       </SelectTrigger>
                       <SelectContent>
@@ -257,9 +258,9 @@ export default function PatientDashboard() {
                     </Select>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="appointmentDate">Date</Label>
+                    <Label htmlFor="appointmentDate" className="text-sm">Date</Label>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -288,9 +289,9 @@ export default function PatientDashboard() {
                     </Popover>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="appointmentTime">Time</Label>
+                    <Label htmlFor="appointmentTime" className="text-sm">Time</Label>
                     <Select onValueChange={(value) => appointmentForm.setValue('appointmentTime', value)}>
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select time" />
                       </SelectTrigger>
                       <SelectContent>
@@ -309,22 +310,24 @@ export default function PatientDashboard() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="reason">Reason for Visit</Label>
+                  <Label htmlFor="reason" className="text-sm">Reason for Visit</Label>
                   <Textarea
                     {...appointmentForm.register('reason')}
                     placeholder="Please describe your symptoms or reason for the appointment"
                     rows={3}
+                    className="w-full"
                   />
                 </div>
-                <div className="flex justify-end space-x-2">
+                <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
                   <Button 
                     type="button" 
                     variant="outline" 
                     onClick={() => setIsBookingOpen(false)}
+                    className="w-full sm:w-auto"
                   >
                     Cancel
                   </Button>
-                  <Button type="submit">
+                  <Button type="submit" className="w-full sm:w-auto">
                     Book Appointment
                   </Button>
                 </div>
@@ -334,23 +337,23 @@ export default function PatientDashboard() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Next Appointment</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Next Appointment</CardTitle>
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockPatientData.nextAppointment}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockPatientData.nextAppointment}</div>
               <p className="text-xs text-muted-foreground">
                 Dr. Sarah Johnson
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Prescriptions</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Active Prescriptions</CardTitle>
               <Pill className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -361,9 +364,9 @@ export default function PatientDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Recent Lab Results</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Recent Lab Results</CardTitle>
               <TestTube className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -374,9 +377,9 @@ export default function PatientDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Last Checkup</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Last Checkup</CardTitle>
               <CheckCircle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>

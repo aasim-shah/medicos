@@ -114,23 +114,23 @@ export default function LoginPage() {
           <div className="mx-auto h-16 w-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg mb-4">
             <Stethoscope className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">MedicoFlow</h1>
+                      <h1 className="text-3xl font-bold text-gray-900 mb-2">Medicos</h1>
           <p className="text-gray-600">
             Your comprehensive medical management system
           </p>
         </div>
 
-        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center space-y-4 pb-6">
+        <Card className="shadow-xl p-4 border-0 bg-white/80 backdrop-blur-sm">
+          {/* <CardHeader className="text-center space-y-4 pb-6">
             <div>
               <h2 className="text-xl font-semibold text-gray-900">Welcome Back</h2>
               <p className="text-sm text-gray-600 mt-1">
                 Sign in to access your medical portal
               </p>
             </div>
-          </CardHeader>
+          </CardHeader> */}
 
-        <CardContent className="pt-0">
+        <CardContent className="p-3">
           <Tabs defaultValue="email" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6 bg-gray-100">
               <TabsTrigger value="email" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">
@@ -302,7 +302,7 @@ export default function LoginPage() {
               Need access? Contact your system administrator
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              Secure medical portal powered by MedicoFlow
+              Secure medical portal powered by Medicos
             </p>
           </div>
         </CardFooter>

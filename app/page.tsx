@@ -14,7 +14,7 @@ export default function HomePage() {
     if (!session) {
       // Auto-login with demo admin credentials
       signIn('credentials', {
-        email: 'admin@medicoflow.com',
+        email: 'admin@medicos.com',
         password: 'admin123',
         redirect: false
       }).then((result) => {

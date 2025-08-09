@@ -249,229 +249,163 @@ export default function PharmacyDashboard() {
 
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Pharmacy Dashboard</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Pharmacy Dashboard</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
               Manage prescriptions and medication dispensing
             </p>
           </div>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" onClick={() => setIsInventoryOpen(true)}>
-              <Package className="mr-2 h-4 w-4" />
-              Inventory
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <Button variant="outline" className="w-full sm:w-auto">
+              <Upload className="mr-2 h-4 w-4" />
+              Import Orders
             </Button>
-            <Dialog open={isNewPrescriptionOpen} onOpenChange={setIsNewPrescriptionOpen}>
-              <DialogTrigger asChild>
-                <Button>
-                  <Plus className="mr-2 h-4 w-4" />
-                  New Prescription
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
-                  <DialogTitle>Fill New Prescription</DialogTitle>
-                  <DialogDescription>
-                    Process a new prescription for a patient.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="patientName" className="text-right">
-                      Patient
-                    </Label>
-                    <Input
-                      id="patientName"
-                      placeholder="Patient name"
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="medication" className="text-right">
-                      Medication
-                    </Label>
-                    <Input
-                      id="medication"
-                      placeholder="Medication name and dosage"
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="quantity" className="text-right">
-                      Quantity
-                    </Label>
-                    <Input
-                      id="quantity"
-                      type="number"
-                      placeholder="Number of pills"
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="refills" className="text-right">
-                      Refills
-                    </Label>
-                    <Select>
-                      <SelectTrigger className="col-span-3">
-                        <SelectValue placeholder="Number of refills" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="0">No refills</SelectItem>
-                        <SelectItem value="1">1 refill</SelectItem>
-                        <SelectItem value="2">2 refills</SelectItem>
-                        <SelectItem value="3">3 refills</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="instructions" className="text-right">
-                      Instructions
-                    </Label>
-                    <Textarea
-                      id="instructions"
-                      placeholder="Dosage instructions"
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="notes" className="text-right">
-                      Notes
-                    </Label>
-                    <Textarea
-                      id="notes"
-                      placeholder="Special instructions"
-                      className="col-span-3"
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-end space-x-2">
-                  <Button variant="outline" onClick={() => setIsNewPrescriptionOpen(false)}>
-                    Cancel
-                  </Button>
-                  <Button onClick={() => setIsNewPrescriptionOpen(false)}>
-                    Fill Prescription
-                  </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
+            <Button variant="outline" className="w-full sm:w-auto">
+              <Download className="mr-2 h-4 w-4" />
+              Export Report
+            </Button>
+            <Button className="w-full sm:w-auto">
+              <Plus className="mr-2 h-4 w-4" />
+              New Prescription
+            </Button>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Prescriptions</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Prescriptions</CardTitle>
               <Pill className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.totalPrescriptions}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.totalPrescriptions}</div>
               <p className="text-xs text-muted-foreground">
-                +23 this week
+                This month
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Fills</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Pending Fills</CardTitle>
               <Clock className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.pendingFills}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.pendingFills}</div>
               <p className="text-xs text-muted-foreground">
-                Ready for pickup
+                Awaiting processing
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Completed Today</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Completed Today</CardTitle>
               <CheckCircle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.completedToday}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.completedToday}</div>
               <p className="text-xs text-muted-foreground">
-                Dispensed today
+                Prescriptions filled
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Out of Stock</CardTitle>
-              <AlertCircle className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-xs sm:text-sm font-medium">Out of Stock</CardTitle>
+              <AlertTriangle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.outOfStock}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.outOfStock}</div>
               <p className="text-xs text-muted-foreground">
-                Need reordering
+                Items need restocking
               </p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Search and Filters */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Prescriptions</CardTitle>
-            <CardDescription>
-              Current prescription orders and their status
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {/* Search and Filter Controls */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="relative flex-1">
+        {/* Filters and Search */}
+        <Card className="shadow-sm">
+          <CardHeader className="pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <CardTitle className="text-lg sm:text-xl">Prescription Management</CardTitle>
+                <CardDescription className="text-sm">
+                  Process and manage prescription orders
+                </CardDescription>
+              </div>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     placeholder="Search prescriptions..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 w-full sm:w-64"
                   />
                 </div>
-                <div className="flex gap-2">
-                  <Select value={statusFilter} onValueChange={setStatusFilter}>
-                    <SelectTrigger className="w-[140px]">
-                      <SelectValue placeholder="Status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Status</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="urgent">Urgent</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Select value={priorityFilter} onValueChange={setPriorityFilter}>
-                    <SelectTrigger className="w-[140px]">
-                      <SelectValue placeholder="Priority" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Priority</SelectItem>
-                      <SelectItem value="routine">Routine</SelectItem>
-                      <SelectItem value="urgent">Urgent</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-full sm:w-40">
+                    <SelectValue placeholder="All Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">All Status</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="processing">Processing</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                    <SelectItem value="cancelled">Cancelled</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={priorityFilter} onValueChange={setPriorityFilter}>
+                  <SelectTrigger className="w-full sm:w-40">
+                    <SelectValue placeholder="All Priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">All Priority</SelectItem>
+                    <SelectItem value="urgent">Urgent</SelectItem>
+                    <SelectItem value="routine">Routine</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-
+            </div>
+          </CardHeader>
+          <CardContent className="p-0 sm:p-6">
+            <div className="space-y-4">
               {/* Bulk Actions */}
               {selectedPrescriptions.length > 0 && (
-                <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                  <span className="text-sm text-muted-foreground">
-                    {selectedPrescriptions.length} prescription(s) selected
-                  </span>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" onClick={handleBulkProcess}>
-                      <RefreshCw className="mr-2 h-3 w-3" />
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-muted/50 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      checked={selectedPrescriptions.length === filteredPrescriptions.length}
+                      onCheckedChange={handleSelectAll}
+                    />
+                    <span className="text-sm font-medium">
+                      {selectedPrescriptions.length} prescription(s) selected
+                    </span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleBulkProcess}
+                      className="w-full sm:w-auto"
+                    >
+                      <Package className="mr-2 h-4 w-4" />
                       Process Selected
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => setSelectedPrescriptions([])}>
-                      Clear Selection
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleBulkComplete}
+                      className="w-full sm:w-auto"
+                    >
+                      <CheckCircle className="mr-2 h-4 w-4" />
+                      Mark Complete
                     </Button>
                   </div>
                 </div>
@@ -479,52 +413,66 @@ export default function PharmacyDashboard() {
 
               {/* Prescriptions List */}
               <div className="space-y-3">
-                <div className="flex items-center p-3 bg-muted rounded-lg">
-                  <Checkbox
-                    checked={selectedPrescriptions.length === filteredPrescriptions.length && filteredPrescriptions.length > 0}
-                    onCheckedChange={handleSelectAll}
-                  />
-                  <span className="ml-3 text-sm font-medium">Select All</span>
-                </div>
-                
                 {filteredPrescriptions.map((prescription) => (
-                  <div key={prescription.id} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center space-x-3">
+                  <div
+                    key={prescription.id}
+                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                  >
+                    <div className="flex items-start gap-3 flex-1 min-w-0">
                       <Checkbox
                         checked={selectedPrescriptions.includes(prescription.id)}
                         onCheckedChange={() => handlePrescriptionSelection(prescription.id)}
+                        className="mt-1"
                       />
-                      <div className="space-y-1">
-                        <div className="flex items-center space-x-2">
-                          <p className="font-medium">{prescription.patientName}</p>
-                          {getPriorityBadge(prescription.priority)}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                          <div className="min-w-0">
+                            <h3 className="font-medium text-sm sm:text-base truncate">
+                              {prescription.patientName}
+                            </h3>
+                            <p className="text-sm text-muted-foreground truncate">
+                              {prescription.medication}
+                            </p>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                            {getStatusBadge(prescription.status, prescription.priority)}
+                            {getPriorityBadge(prescription.priority)}
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">
-                          {prescription.medication} • Prescribed by {prescription.prescribedBy}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          Order date: {prescription.orderDate} • Qty: {prescription.quantity} • Refills: {prescription.refills}
-                        </p>
+                        <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-muted-foreground">
+                          <span>Dr. {prescription.prescribedBy.split(' ').slice(-1)[0]}</span>
+                          <span>Qty: {prescription.quantity}</span>
+                          <span>Refills: {prescription.refills}</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      {getStatusBadge(prescription.status, prescription.priority)}
-                      <Button 
-                        variant="outline" 
+                    <div className="flex items-center gap-2 mt-3 sm:mt-0">
+                      <Button
+                        variant="ghost"
                         size="sm"
                         onClick={() => handleViewPrescription(prescription)}
+                        className="h-8 w-8 p-0"
                       >
-                        <Eye className="mr-2 h-3 w-3" />
-                        View
+                        <Eye className="h-4 w-4" />
                       </Button>
                       {prescription.status === 'pending' && (
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="ghost"
                           size="sm"
                           onClick={() => handleProcessPrescription(prescription)}
+                          className="h-8 w-8 p-0"
                         >
-                          <RefreshCw className="mr-2 h-3 w-3" />
-                          Process
+                          <Package className="h-4 w-4" />
+                        </Button>
+                      )}
+                      {prescription.status === 'processing' && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleCompletePrescription(prescription.id)}
+                          className="h-8 w-8 p-0"
+                        >
+                          <CheckCircle className="h-4 w-4" />
                         </Button>
                       )}
                     </div>

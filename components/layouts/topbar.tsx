@@ -28,7 +28,7 @@ export function Topbar() {
       <div className="flex h-full items-center justify-between px-6">
         <div className="flex items-center space-x-4">
           <h1 className="text-xl font-semibold">
-            {session?.user.tenant?.name || 'MedicoFlow'}
+            {session?.user.tenant?.name || 'Medicos'}
           </h1>
         </div>
 

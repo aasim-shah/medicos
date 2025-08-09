@@ -71,11 +71,11 @@ export default function AdminSettingsPage() {
   const tenantForm = useForm<TenantFormData>({
     resolver: zodResolver(tenantSchema),
     defaultValues: {
-      name: session?.user?.tenant?.name || 'MedicoFlow Hospital',
-      email: 'info@medicoflow.com',
+      name: session?.user?.tenant?.name || 'Medicos Hospital',
+      email: 'info@medicos.com',
       phone: session?.user?.tenant?.phone || '+1 (555) 123-4567',
       address: session?.user?.tenant?.address || '123 Medical Center Dr, Healthcare City, HC 12345',
-      website: 'https://medicoflow.com',
+      website: 'https://medicos.com',
       primaryColor: session?.user?.tenant?.primaryColor || '#3b82f6',
       secondaryColor: session?.user?.tenant?.secondaryColor || '#1e40af',
     }

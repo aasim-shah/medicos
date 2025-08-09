@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Users, Calendar, Stethoscope, FileText, Plus, Eye, Edit, Clock, AlertCircle } from 'lucide-react'
+import { Users, Calendar, Stethoscope, FileText, Plus, Eye, Edit, Clock, AlertCircle, CheckCircle } from 'lucide-react'
 import { useState } from 'react'
 
 // Mock data for doctor dashboard
@@ -99,22 +99,23 @@ export default function DoctorDashboard() {
 
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Doctor Dashboard</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Doctor Dashboard</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
               Manage your patients and consultations
             </p>
           </div>
           <Dialog open={isNewConsultationOpen} onOpenChange={setIsNewConsultationOpen}>
             <DialogTrigger asChild>
-              <Button>
+              <Button className="w-full sm:w-auto">
                 <Plus className="mr-2 h-4 w-4" />
                 New Consultation
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[500px]">
+            <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>New Patient Consultation</DialogTitle>
                 <DialogDescription>
@@ -122,12 +123,12 @@ export default function DoctorDashboard() {
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="patientName" className="text-right">
+                <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                  <Label htmlFor="patientName" className="text-right text-sm">
                     Patient
                   </Label>
                   <Select>
-                    <SelectTrigger className="col-span-3">
+                    <SelectTrigger className="sm:col-span-3 w-full">
                       <SelectValue placeholder="Select patient" />
                     </SelectTrigger>
                     <SelectContent>
@@ -137,12 +138,12 @@ export default function DoctorDashboard() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="consultationType" className="text-right">
+                <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                  <Label htmlFor="consultationType" className="text-right text-sm">
                     Type
                   </Label>
                   <Select>
-                    <SelectTrigger className="col-span-3">
+                    <SelectTrigger className="sm:col-span-3 w-full">
                       <SelectValue placeholder="Consultation type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -153,194 +154,197 @@ export default function DoctorDashboard() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="symptoms" className="text-right">
+                <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                  <Label htmlFor="symptoms" className="text-right text-sm">
                     Symptoms
                   </Label>
                   <Textarea
                     id="symptoms"
                     placeholder="Patient symptoms"
-                    className="col-span-3"
+                    className="sm:col-span-3 w-full"
                   />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="diagnosis" className="text-right">
+                <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                  <Label htmlFor="diagnosis" className="text-right text-sm">
                     Diagnosis
                   </Label>
                   <Textarea
                     id="diagnosis"
                     placeholder="Diagnosis and findings"
-                    className="col-span-3"
+                    className="sm:col-span-3 w-full"
                   />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="treatment" className="text-right">
+                <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                  <Label htmlFor="treatment" className="text-right text-sm">
                     Treatment
                   </Label>
                   <Textarea
                     id="treatment"
                     placeholder="Treatment plan"
-                    className="col-span-3"
+                    className="sm:col-span-3 w-full"
                   />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="notes" className="text-right">
+                <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                  <Label htmlFor="notes" className="text-right text-sm">
                     Notes
                   </Label>
                   <Textarea
                     id="notes"
                     placeholder="Additional notes"
-                    className="col-span-3"
+                    className="sm:col-span-3 w-full"
                   />
                 </div>
               </div>
-              <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => setIsNewConsultationOpen(false)}>
+              <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
+                <Button variant="outline" onClick={() => setIsNewConsultationOpen(false)} className="w-full sm:w-auto">
                   Cancel
                 </Button>
-                <Button onClick={() => setIsNewConsultationOpen(false)}>
-                  Start Consultation
-                </Button>
+                <Button className="w-full sm:w-auto">Start Consultation</Button>
               </div>
             </DialogContent>
           </Dialog>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Patients</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Patients</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.totalPatients}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.totalPatients}</div>
               <p className="text-xs text-muted-foreground">
-                +5 new this month
+                Under your care
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Today's Appointments</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Today's Appointments</CardTitle>
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.appointmentsToday}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.appointmentsToday}</div>
               <p className="text-xs text-muted-foreground">
                 {mockStats.completedToday} completed
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Consultations</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Pending Consultations</CardTitle>
               <Stethoscope className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockStats.pendingConsultations}</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.pendingConsultations}</div>
               <p className="text-xs text-muted-foreground">
-                Require attention
+                Awaiting review
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Medical Records</CardTitle>
-              <FileText className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-xs sm:text-sm font-medium">Completed Today</CardTitle>
+              <CheckCircle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">89</div>
+              <div className="text-xl sm:text-2xl font-bold">{mockStats.completedToday}</div>
               <p className="text-xs text-muted-foreground">
-                Updated this week
+                Consultations
               </p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Recent Consultations */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Consultations</CardTitle>
-            <CardDescription>
-              Your recent patient consultations
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {mockConsultations.map((consultation) => (
-                <div key={consultation.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="space-y-1">
-                    <p className="font-medium">{consultation.patientName}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {consultation.type} • {consultation.date} at {consultation.time}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {consultation.notes}
-                    </p>
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          {/* Recent Patients */}
+          <Card className="shadow-sm">
+            <CardHeader className="pb-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-lg sm:text-xl">Recent Patients</CardTitle>
+                  <CardDescription className="text-sm">
+                    Your most recent patient interactions
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="p-0 sm:p-6">
+              <div className="space-y-4">
+                {mockPatients.map((patient) => (
+                  <div key={patient.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                        <Users className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-sm sm:text-base">{patient.name}</p>
+                        <p className="text-xs text-muted-foreground">{patient.condition}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleViewPatient(patient)}
+                        className="h-8 w-8 p-0"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleScheduleFollowUp(patient)}
+                        className="h-8 w-8 p-0"
+                      >
+                        <Calendar className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge variant={consultation.status === 'completed' ? 'default' : 'secondary'}>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Today's Consultations */}
+          <Card className="shadow-sm">
+            <CardHeader className="pb-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-lg sm:text-xl">Today's Consultations</CardTitle>
+                  <CardDescription className="text-sm">
+                    Scheduled consultations for today
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="p-0 sm:p-6">
+              <div className="space-y-4">
+                {mockConsultations.map((consultation) => (
+                  <div key={consultation.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                        <Stethoscope className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-sm sm:text-base">{consultation.patientName}</p>
+                        <p className="text-xs text-muted-foreground">{consultation.time} • {consultation.type}</p>
+                      </div>
+                    </div>
+                    <Badge variant={consultation.status === 'completed' ? 'default' : 'secondary'} className="text-xs">
                       {consultation.status}
                     </Badge>
-                    <Button variant="outline" size="sm">
-                      View Details
-                    </Button>
                   </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Patient List */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Patients</CardTitle>
-            <CardDescription>
-              Your active patients and their status
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {mockPatients.map((patient) => (
-                <div key={patient.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="space-y-1">
-                    <p className="font-medium">{patient.name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      Age: {patient.age} • {patient.condition}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Last visit: {patient.lastVisit} • Next: {patient.nextAppointment}
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge variant="secondary">{patient.status}</Badge>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => handleViewPatient(patient)}
-                    >
-                      <Eye className="mr-2 h-3 w-3" />
-                      View Details
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => handleScheduleFollowUp(patient)}
-                    >
-                      <Clock className="mr-2 h-3 w-3" />
-                      Follow-up
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
       {/* Patient Details Dialog */}

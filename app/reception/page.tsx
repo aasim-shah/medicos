@@ -128,211 +128,150 @@ export default function ReceptionDashboard() {
 
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Reception</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Reception</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
               Manage appointments and patient registration
             </p>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <Dialog open={isRegistrationOpen} onOpenChange={setIsRegistrationOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline">
+                <Button variant="outline" className="w-full sm:w-auto">
                   <User className="mr-2 h-4 w-4" />
                   Register Patient
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[500px]">
+              <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle>Register New Patient</DialogTitle>
                   <DialogDescription>
-                    Add a new patient to the system.
+                    Register a new patient in the system.
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="firstName" className="text-right">
-                      First Name
-                    </Label>
-                    <Input
-                      id="firstName"
-                      placeholder="First name"
-                      className="col-span-3"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName" className="text-sm">First Name</Label>
+                      <Input id="firstName" placeholder="First name" className="w-full" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName" className="text-sm">Last Name</Label>
+                      <Input id="lastName" placeholder="Last name" className="w-full" />
+                    </div>
                   </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="lastName" className="text-right">
-                      Last Name
-                    </Label>
-                    <Input
-                      id="lastName"
-                      placeholder="Last name"
-                      className="col-span-3"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-sm">Email</Label>
+                      <Input id="email" type="email" placeholder="Email address" className="w-full" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone" className="text-sm">Phone</Label>
+                      <Input id="phone" placeholder="Phone number" className="w-full" />
+                    </div>
                   </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="dateOfBirth" className="text-right">
-                      Date of Birth
-                    </Label>
-                    <Input
-                      id="dateOfBirth"
-                      type="date"
-                      className="col-span-3"
-                    />
+                  <div className="space-y-2">
+                    <Label htmlFor="address" className="text-sm">Address</Label>
+                    <Textarea id="address" placeholder="Full address" rows={2} className="w-full" />
                   </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="phone" className="text-right">
-                      Phone
-                    </Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="Phone number"
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="email" className="text-right">
-                      Email
-                    </Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="Email address"
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="address" className="text-right">
-                      Address
-                    </Label>
-                    <Textarea
-                      id="address"
-                      placeholder="Full address"
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="emergencyContact" className="text-right">
-                      Emergency Contact
-                    </Label>
-                    <Input
-                      id="emergencyContact"
-                      placeholder="Emergency contact name and phone"
-                      className="col-span-3"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="dateOfBirth" className="text-sm">Date of Birth</Label>
+                      <Input id="dateOfBirth" type="date" className="w-full" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="emergencyContact" className="text-sm">Emergency Contact</Label>
+                      <Input id="emergencyContact" placeholder="Emergency contact" className="w-full" />
+                    </div>
                   </div>
                 </div>
-                <div className="flex justify-end space-x-2">
-                  <Button variant="outline" onClick={() => setIsRegistrationOpen(false)}>
+                <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
+                  <Button variant="outline" onClick={() => setIsRegistrationOpen(false)} className="w-full sm:w-auto">
                     Cancel
                   </Button>
-                  <Button onClick={() => setIsRegistrationOpen(false)}>
+                  <Button onClick={() => setIsRegistrationOpen(false)} className="w-full sm:w-auto">
                     Register Patient
                   </Button>
                 </div>
               </DialogContent>
             </Dialog>
-
             <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
               <DialogTrigger asChild>
-                <Button>
+                <Button onClick={handleBookAppointment} className="w-full sm:w-auto">
                   <Plus className="mr-2 h-4 w-4" />
                   Book Appointment
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[500px]">
+              <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
-                  <DialogTitle>Book New Appointment</DialogTitle>
+                  <DialogTitle>Book Appointment</DialogTitle>
                   <DialogDescription>
                     Schedule an appointment for a patient.
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="patientSelect" className="text-right">
-                      Patient
-                    </Label>
-                    <Select>
-                      <SelectTrigger className="col-span-3">
-                        <SelectValue placeholder="Select patient" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="john">John Smith</SelectItem>
-                        <SelectItem value="emily">Emily Davis</SelectItem>
-                        <SelectItem value="robert">Robert Wilson</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="patient" className="text-sm">Patient</Label>
+                      <Select>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select patient" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="john">John Smith</SelectItem>
+                          <SelectItem value="emily">Emily Davis</SelectItem>
+                          <SelectItem value="robert">Robert Wilson</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="doctor" className="text-sm">Doctor</Label>
+                      <Select>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select doctor" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="sarah">Dr. Sarah Johnson</SelectItem>
+                          <SelectItem value="michael">Dr. Michael Brown</SelectItem>
+                          <SelectItem value="lisa">Dr. Lisa Anderson</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="doctorSelect" className="text-right">
-                      Doctor
-                    </Label>
-                    <Select>
-                      <SelectTrigger className="col-span-3">
-                        <SelectValue placeholder="Select doctor" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="sarah">Dr. Sarah Johnson - Cardiology</SelectItem>
-                        <SelectItem value="michael">Dr. Michael Brown - Dermatology</SelectItem>
-                        <SelectItem value="lisa">Dr. Lisa Anderson - Orthopedics</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="date" className="text-sm">Date</Label>
+                      <Input id="date" type="date" className="w-full" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="time" className="text-sm">Time</Label>
+                      <Select>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select time" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="09:00">9:00 AM</SelectItem>
+                          <SelectItem value="09:30">9:30 AM</SelectItem>
+                          <SelectItem value="10:00">10:00 AM</SelectItem>
+                          <SelectItem value="10:30">10:30 AM</SelectItem>
+                          <SelectItem value="11:00">11:00 AM</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="appointmentDate" className="text-right">
-                      Date
-                    </Label>
-                    <Input
-                      id="appointmentDate"
-                      type="date"
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="appointmentTime" className="text-right">
-                      Time
-                    </Label>
-                    <Input
-                      id="appointmentTime"
-                      type="time"
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="appointmentType" className="text-right">
-                      Type
-                    </Label>
-                    <Select>
-                      <SelectTrigger className="col-span-3">
-                        <SelectValue placeholder="Appointment type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="consultation">Consultation</SelectItem>
-                        <SelectItem value="followup">Follow-up</SelectItem>
-                        <SelectItem value="emergency">Emergency</SelectItem>
-                        <SelectItem value="routine">Routine Check</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="notes" className="text-right">
-                      Notes
-                    </Label>
-                    <Textarea
-                      id="notes"
-                      placeholder="Additional notes"
-                      className="col-span-3"
-                    />
+                  <div className="space-y-2">
+                    <Label htmlFor="reason" className="text-sm">Reason</Label>
+                    <Textarea id="reason" placeholder="Reason for appointment" rows={3} className="w-full" />
                   </div>
                 </div>
-                <div className="flex justify-end space-x-2">
-                  <Button variant="outline" onClick={() => setIsBookingOpen(false)}>
+                <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
+                  <Button variant="outline" onClick={() => setIsBookingOpen(false)} className="w-full sm:w-auto">
                     Cancel
                   </Button>
-                  <Button onClick={() => setIsBookingOpen(false)}>
+                  <Button onClick={() => setIsBookingOpen(false)} className="w-full sm:w-auto">
                     Book Appointment
                   </Button>
                 </div>
@@ -342,63 +281,85 @@ export default function ReceptionDashboard() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid gap-4 md:grid-cols-3">
-          <Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Today's Appointments</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Today's Appointments</CardTitle>
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{todaysAppointments.length}</div>
+              <div className="text-xl sm:text-2xl font-bold">{todaysAppointments.length}</div>
               <p className="text-xs text-muted-foreground">
                 {todaysAppointments.filter(a => a.status === 'checked-in').length} checked in
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Next Appointment</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Pending Check-ins</CardTitle>
               <Clock className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">10:30</div>
+              <div className="text-xl sm:text-2xl font-bold">
+                {todaysAppointments.filter(a => a.status === 'booked').length}
+              </div>
               <p className="text-xs text-muted-foreground">
-                Emily Davis - Dr. Brown
+                Awaiting arrival
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Walk-ins Today</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Checked In</CardTitle>
+              <CheckCircle className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-xl sm:text-2xl font-bold">
+                {todaysAppointments.filter(a => a.status === 'checked-in').length}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Patients seen
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Patients</CardTitle>
               <User className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">3</div>
+              <div className="text-xl sm:text-2xl font-bold">1,247</div>
               <p className="text-xs text-muted-foreground">
-                All accommodated
+                Registered patients
               </p>
             </CardContent>
           </Card>
         </div>
 
         {/* Today's Appointments */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Today's Appointments</CardTitle>
-            <CardDescription>
-              Manage check-ins and appointment scheduling
-            </CardDescription>
+        <Card className="shadow-sm">
+          <CardHeader className="pb-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-lg sm:text-xl">Today's Appointments</CardTitle>
+                <CardDescription className="text-sm">
+                  Manage today's scheduled appointments
+                </CardDescription>
+              </div>
+            </div>
           </CardHeader>
-          <CardContent>
-            <DataTable
-              data={todaysAppointments}
-              columns={appointmentColumns}
-              actions={appointmentActions}
-              searchPlaceholder="Search by patient name or phone..."
-              pageSize={15}
-            />
+          <CardContent className="p-0 sm:p-6">
+            <div className="overflow-x-auto">
+              <DataTable
+                data={todaysAppointments}
+                columns={appointmentColumns}
+                actions={appointmentActions}
+                searchPlaceholder="Search appointments..."
+              />
+            </div>
           </CardContent>
         </Card>
       </div>

@@ -66,7 +66,7 @@ export const endpoints = {
     update: (id: string) => `/patients/${id}`,
     delete: (id: string) => `/patients/${id}`,
     search: '/patients/search',
-    history: (id: string) => `/patients/${id}/history'
+    history: (id: string) => `/patients/${id}/history`
   },
   appointments: {
     list: '/appointments',
@@ -90,14 +90,14 @@ export const endpoints = {
     patient: (patientId: string) => `/prescriptions/patient/${patientId}`,
     doctor: (doctorId: string) => `/prescriptions/doctor/${doctorId}`,
     fill: (id: string) => `/prescriptions/${id}/fill`,
-    refill: (id: string) => `/prescriptions/${id}/refill'
+    refill: (id: string) => `/prescriptions/${id}/refill`
   },
   labOrders: {
     list: '/lab-orders',
     create: '/lab-orders',
     update: (id: string) => `/lab-orders/${id}`,
     delete: (id: string) => `/lab-orders/${id}`,
-    results: (id: string) => `/lab-orders/${id}/results',
+    results: (id: string) => `/lab-orders/${id}/results`,
     patient: (patientId: string) => `/lab-orders/patient/${patientId}`,
     doctor: (doctorId: string) => `/lab-orders/doctor/${doctorId}`
   },
@@ -106,7 +106,7 @@ export const endpoints = {
     create: '/departments',
     update: (id: string) => `/departments/${id}`,
     delete: (id: string) => `/departments/${id}`,
-    staff: (id: string) => `/departments/${id}/staff'
+    staff: (id: string) => `/departments/${id}/staff`
   },
   inventory: {
     list: '/inventory',
@@ -114,7 +114,7 @@ export const endpoints = {
     update: (id: string) => `/inventory/${id}`,
     delete: (id: string) => `/inventory/${id}`,
     lowStock: '/inventory/low-stock',
-    reorder: (id: string) => `/inventory/${id}/reorder'
+    reorder: (id: string) => `/inventory/${id}/reorder`
   },
   tenants: {
     settings: '/tenants/settings',

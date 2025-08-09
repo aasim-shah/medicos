@@ -8,6 +8,7 @@ export const staffSchema = z.object({
   department: z.string().min(1, 'Department is required'),
   phone: z.string().min(10, 'Phone number must be at least 10 digits'),
   status: z.enum(['active', 'inactive']).default('active'),
+  hireDate: z.string().optional(),
 })
 
 export const staffUpdateSchema = staffSchema.partial()
@@ -96,6 +97,8 @@ export const departmentSchema = z.object({
   headOfDepartment: z.string().optional(),
   location: z.string().optional(),
   status: z.enum(['active', 'inactive']).default('active'),
+  contactEmail: z.string().email('Invalid email address').optional(),
+  contactPhone: z.string().optional(),
 })
 
 export const departmentUpdateSchema = departmentSchema.partial()

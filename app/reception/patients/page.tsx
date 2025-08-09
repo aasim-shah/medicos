@@ -396,7 +396,7 @@ export default function ReceptionPatientsPage() {
                   <Avatar className="h-20 w-20">
                     <AvatarImage src="" />
                     <AvatarFallback className="text-2xl">
-                      {selectedPatient.name.split(' ').map(n => n[0]).join('')}
+                      {selectedPatient.name.split(' ').map((n: string) => n[0]).join('')}
                     </AvatarFallback>
                   </Avatar>
                   <div>

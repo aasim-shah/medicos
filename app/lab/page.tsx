@@ -304,7 +304,7 @@ export default function LabDashboard() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="priority">Priority</Label>
-                    <Select onValueChange={(value) => newOrderForm.setValue('priority', value)}>
+                    <Select onValueChange={(value) => newOrderForm.setValue('priority', value as 'routine' | 'urgent' | 'emergency')}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select priority" />
                       </SelectTrigger>
@@ -634,7 +634,7 @@ export default function LabDashboard() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="edit-priority">Priority</Label>
-                <Select onValueChange={(value) => editOrderForm.setValue('priority', value)}>
+                <Select onValueChange={(value) => editOrderForm.setValue('priority', value as 'routine' | 'urgent' | 'emergency')}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select priority" />
                   </SelectTrigger>
@@ -648,7 +648,7 @@ export default function LabDashboard() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="edit-status">Status</Label>
-              <Select onValueChange={(value) => editOrderForm.setValue('status', value)}>
+              <Select onValueChange={(value) => editOrderForm.setValue('status', value as 'pending' | 'in-progress' | 'completed' | 'cancelled')}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>

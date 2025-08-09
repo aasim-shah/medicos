@@ -72,10 +72,10 @@ export default function AdminSettingsPage() {
     resolver: zodResolver(tenantSchema),
     defaultValues: {
       name: session?.user?.tenant?.name || 'MedicoFlow Hospital',
-      email: session?.user?.tenant?.email || 'info@medicoflow.com',
+      email: 'info@medicoflow.com',
       phone: session?.user?.tenant?.phone || '+1 (555) 123-4567',
       address: session?.user?.tenant?.address || '123 Medical Center Dr, Healthcare City, HC 12345',
-      website: session?.user?.tenant?.website || 'https://medicoflow.com',
+      website: 'https://medicoflow.com',
       primaryColor: session?.user?.tenant?.primaryColor || '#3b82f6',
       secondaryColor: session?.user?.tenant?.secondaryColor || '#1e40af',
     }

@@ -86,7 +86,7 @@ export default function StaffManagementPage() {
       department: '',
       phone: '',
       status: 'active',
-      hireDate: new Date().toISOString().split('T')[0]
+      hireDate: ''
     }
   })
 
@@ -279,7 +279,7 @@ export default function StaffManagementPage() {
                     Role
                   </Label>
                   <div className="col-span-3">
-                    <Select onValueChange={(value) => addStaffForm.setValue('role', value)}>
+                    <Select onValueChange={(value) => addStaffForm.setValue('role', value as 'doctor' | 'nurse' | 'reception' | 'lab' | 'pharmacy' | 'admin')}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select role" />
                       </SelectTrigger>
@@ -493,7 +493,7 @@ export default function StaffManagementPage() {
                 Role
               </Label>
               <div className="col-span-3">
-                <Select onValueChange={(value) => editStaffForm.setValue('role', value)}>
+                <Select onValueChange={(value) => editStaffForm.setValue('role', value as 'doctor' | 'nurse' | 'reception' | 'lab' | 'pharmacy' | 'admin')}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select role" />
                   </SelectTrigger>

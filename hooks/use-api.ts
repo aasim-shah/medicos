@@ -4,7 +4,7 @@ import { toast } from '@/hooks/use-toast'
 import { queryKeys } from '@/lib/react-query'
 
 // Generic list hook
-export function useList<T>(key: string[], endpoint: string, params?: any) {
+export function useList<T>(key: readonly (string | undefined)[], endpoint: string, params?: any) {
   return useQuery({
     queryKey: key,
     queryFn: async () => {
@@ -16,7 +16,7 @@ export function useList<T>(key: string[], endpoint: string, params?: any) {
 }
 
 // Generic create hook
-export function useCreate<T>(key: string[], endpoint: string) {
+export function useCreate<T>(key: readonly (string | undefined)[], endpoint: string) {
   const queryClient = useQueryClient()
   
   return useMutation({
@@ -42,7 +42,7 @@ export function useCreate<T>(key: string[], endpoint: string) {
 }
 
 // Generic update hook
-export function useUpdate<T>(key: string[], getEndpoint: (id: string) => string) {
+export function useUpdate<T>(key: readonly (string | undefined)[], getEndpoint: (id: string) => string) {
   const queryClient = useQueryClient()
   
   return useMutation({
@@ -68,7 +68,7 @@ export function useUpdate<T>(key: string[], getEndpoint: (id: string) => string)
 }
 
 // Generic delete hook
-export function useDelete(key: string[], getEndpoint: (id: string) => string) {
+export function useDelete(key: readonly (string | undefined)[], getEndpoint: (id: string) => string) {
   const queryClient = useQueryClient()
   
   return useMutation({

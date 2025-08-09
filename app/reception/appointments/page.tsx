@@ -46,13 +46,13 @@ const appointmentColumns: Column<any>[] = [
     ),
   },
   {
-    key: 'appointmentDate',
+    key: 'date',
     title: 'Date',
     sortable: true,
     render: (value) => value ? format(new Date(value), 'MMM dd, yyyy') : 'N/A',
   },
   {
-    key: 'appointmentTime',
+    key: 'time',
     title: 'Time',
     render: (value) => (
       <div className="flex items-center space-x-2">
@@ -121,12 +121,12 @@ export default function AppointmentsManagementPage() {
     defaultValues: {
       patientId: '',
       doctorId: '',
-      appointmentDate: new Date(),
-      appointmentTime: '',
+      date: new Date().toISOString().split('T')[0],
+      time: '',
       type: 'consultation',
+      reason: '',
       status: 'scheduled',
-      notes: '',
-      duration: '30'
+      notes: ''
     }
   })
 
@@ -135,12 +135,12 @@ export default function AppointmentsManagementPage() {
     defaultValues: {
       patientId: '',
       doctorId: '',
-      appointmentDate: new Date(),
-      appointmentTime: '',
+      date: '',
+      time: '',
       type: 'consultation',
+      reason: '',
       status: 'scheduled',
-      notes: '',
-      duration: '30'
+      notes: ''
     }
   })
 
@@ -214,12 +214,12 @@ export default function AppointmentsManagementPage() {
     editAppointmentForm.reset({
       patientId: appointment.patientId,
       doctorId: appointment.doctorId,
-      appointmentDate: appointment.appointmentDate ? new Date(appointment.appointmentDate) : new Date(),
-      appointmentTime: appointment.appointmentTime,
+      date: appointment.date || appointment.appointmentDate ? new Date(appointment.date || appointment.appointmentDate).toISOString().split('T')[0] : '',
+      time: appointment.time || appointment.appointmentTime || '',
       type: appointment.type,
+      reason: appointment.reason || '',
       status: appointment.status,
-      notes: appointment.notes,
-      duration: appointment.duration
+      notes: appointment.notes || ''
     })
     setIsEditAppointmentOpen(true)
   }
@@ -255,7 +255,7 @@ export default function AppointmentsManagementPage() {
     const matchesStatus = !statusFilter || appointment.status === statusFilter
     const matchesType = !typeFilter || appointment.type === typeFilter
     const matchesDate = !dateFilter || 
-                       format(new Date(appointment.appointmentDate), 'yyyy-MM-dd') === 
+                       format(new Date(appointment.date || appointment.appointmentDate), 'yyyy-MM-dd') === 
                        format(dateFilter, 'yyyy-MM-dd')
     
     return matchesSearch && matchesStatus && matchesType && matchesDate
@@ -343,19 +343,19 @@ export default function AppointmentsManagementPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="appointmentDate">Date</Label>
+                    <Label htmlFor="date">Date</Label>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
                           className={cn(
                             "w-full justify-start text-left font-normal",
-                            !addAppointmentForm.watch('appointmentDate') && "text-muted-foreground"
+                            !addAppointmentForm.watch('date') && "text-muted-foreground"
                           )}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {addAppointmentForm.watch('appointmentDate') ? (
-                            format(addAppointmentForm.watch('appointmentDate'), "PPP")
+                          {addAppointmentForm.watch('date') ? (
+                            format(new Date(addAppointmentForm.watch('date') || new Date()), "PPP")
                           ) : (
                             <span>Pick a date</span>
                           )}
@@ -364,16 +364,16 @@ export default function AppointmentsManagementPage() {
                       <PopoverContent className="w-auto p-0">
                         <Calendar
                           mode="single"
-                          selected={addAppointmentForm.watch('appointmentDate')}
-                          onSelect={(date) => addAppointmentForm.setValue('appointmentDate', date || new Date())}
+                          selected={addAppointmentForm.watch('date') ? new Date(addAppointmentForm.watch('date')!) : undefined}
+                          onSelect={(date) => addAppointmentForm.setValue('date', date ? date.toISOString().split('T')[0] : new Date().toISOString().split('T')[0])}
                           initialFocus
                         />
                       </PopoverContent>
                     </Popover>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="appointmentTime">Time</Label>
-                    <Select onValueChange={(value) => addAppointmentForm.setValue('appointmentTime', value)}>
+                    <Label htmlFor="time">Time</Label>
+                    <Select onValueChange={(value) => addAppointmentForm.setValue('time', value)}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select time" />
                       </SelectTrigger>
@@ -392,9 +392,9 @@ export default function AppointmentsManagementPage() {
                         <SelectItem value="16:30">4:30 PM</SelectItem>
                       </SelectContent>
                     </Select>
-                    {addAppointmentForm.formState.errors.appointmentTime && (
+                    {addAppointmentForm.formState.errors.time && (
                       <p className="text-sm text-red-500 mt-1">
-                        {addAppointmentForm.formState.errors.appointmentTime.message}
+                        {addAppointmentForm.formState.errors.time.message}
                       </p>
                     )}
                   </div>
@@ -402,7 +402,7 @@ export default function AppointmentsManagementPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="type">Appointment Type</Label>
-                    <Select onValueChange={(value) => addAppointmentForm.setValue('type', value)}>
+                    <Select onValueChange={(value) => addAppointmentForm.setValue('type', value as 'consultation' | 'follow-up' | 'emergency' | 'routine')}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
@@ -416,20 +416,16 @@ export default function AppointmentsManagementPage() {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="duration">Duration (minutes)</Label>
-                    <Select onValueChange={(value) => addAppointmentForm.setValue('duration', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select duration" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="15">15 minutes</SelectItem>
-                        <SelectItem value="30">30 minutes</SelectItem>
-                        <SelectItem value="45">45 minutes</SelectItem>
-                        <SelectItem value="60">1 hour</SelectItem>
-                        <SelectItem value="90">1.5 hours</SelectItem>
-                        <SelectItem value="120">2 hours</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Label htmlFor="reason">Reason</Label>
+                    <Input
+                      {...addAppointmentForm.register('reason')}
+                      placeholder="Reason for appointment"
+                    />
+                    {addAppointmentForm.formState.errors.reason && (
+                      <p className="text-sm text-red-500 mt-1">
+                        {addAppointmentForm.formState.errors.reason.message}
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -610,19 +606,19 @@ export default function AppointmentsManagementPage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="edit-appointmentDate">Date</Label>
+                <Label htmlFor="edit-date">Date</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
                       className={cn(
                         "w-full justify-start text-left font-normal",
-                        !editAppointmentForm.watch('appointmentDate') && "text-muted-foreground"
+                        !editAppointmentForm.watch('date') && "text-muted-foreground"
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {editAppointmentForm.watch('appointmentDate') ? (
-                        format(editAppointmentForm.watch('appointmentDate'), "PPP")
+                      {editAppointmentForm.watch('date') ? (
+                        format(new Date(editAppointmentForm.watch('date') || new Date()), "PPP")
                       ) : (
                         <span>Pick a date</span>
                       )}
@@ -631,16 +627,16 @@ export default function AppointmentsManagementPage() {
                   <PopoverContent className="w-auto p-0">
                     <Calendar
                       mode="single"
-                      selected={editAppointmentForm.watch('appointmentDate')}
-                      onSelect={(date) => editAppointmentForm.setValue('appointmentDate', date || new Date())}
+                      selected={editAppointmentForm.watch('date') ? new Date(editAppointmentForm.watch('date')!) : undefined}
+                      onSelect={(date) => editAppointmentForm.setValue('date', date ? date.toISOString().split('T')[0] : new Date().toISOString().split('T')[0])}
                       initialFocus
                     />
                   </PopoverContent>
                 </Popover>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="edit-appointmentTime">Time</Label>
-                <Select onValueChange={(value) => editAppointmentForm.setValue('appointmentTime', value)}>
+                <Label htmlFor="edit-time">Time</Label>
+                <Select onValueChange={(value) => editAppointmentForm.setValue('time', value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select time" />
                   </SelectTrigger>
@@ -664,7 +660,7 @@ export default function AppointmentsManagementPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="edit-type">Appointment Type</Label>
-                <Select onValueChange={(value) => editAppointmentForm.setValue('type', value)}>
+                <Select onValueChange={(value) => editAppointmentForm.setValue('type', value as 'consultation' | 'follow-up' | 'emergency' | 'routine')}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
@@ -679,7 +675,7 @@ export default function AppointmentsManagementPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="edit-status">Status</Label>
-                <Select onValueChange={(value) => editAppointmentForm.setValue('status', value)}>
+                <Select onValueChange={(value) => editAppointmentForm.setValue('status', value as 'scheduled' | 'confirmed' | 'completed' | 'cancelled')}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
@@ -692,6 +688,18 @@ export default function AppointmentsManagementPage() {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-reason">Reason</Label>
+              <Input
+                {...editAppointmentForm.register('reason')}
+                placeholder="Reason for appointment"
+              />
+              {editAppointmentForm.formState.errors.reason && (
+                <p className="text-sm text-red-500 mt-1">
+                  {editAppointmentForm.formState.errors.reason.message}
+                </p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="edit-notes">Notes</Label>

@@ -293,7 +293,7 @@ export default function PatientHistoryPage() {
               {Object.entries(selectedRecord.results).map(([key, value]) => (
                 <div key={key} className="flex justify-between p-2 bg-muted rounded">
                   <span className="text-sm font-medium">{key}</span>
-                  <span className="text-sm text-muted-foreground">{value}</span>
+                  <span className="text-sm text-muted-foreground">{String(value)}</span>
                 </div>
               ))}
             </div>

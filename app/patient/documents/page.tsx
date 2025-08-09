@@ -18,7 +18,7 @@ import {
   Calendar, 
   User, 
   FileImage, 
-  FilePdf, 
+  File, 
   FileArchive,
   Trash2,
   Plus
@@ -138,7 +138,7 @@ export default function PatientDocumentsPage() {
   const getFileTypeIcon = (fileType: string) => {
     switch (fileType.toLowerCase()) {
       case 'pdf':
-        return <FilePdf className="h-8 w-8 text-red-500" />
+        return <File className="h-8 w-8 text-red-500" />
       case 'image':
         return <FileImage className="h-8 w-8 text-blue-500" />
       case 'archive':

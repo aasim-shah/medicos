@@ -53,8 +53,8 @@ export default function ProfilePage() {
     defaultValues: {
       name: session?.user?.name || '',
       email: session?.user?.email || '',
-      phone: session?.user?.phone || '',
-      department: session?.user?.department || '',
+      phone: '',
+      department: '',
     }
   })
 
@@ -148,9 +148,9 @@ export default function ProfilePage() {
             <CardHeader className="text-center">
               <div className="mx-auto mb-4">
                 <Avatar className="h-24 w-24">
-                  <AvatarImage src={session.user.avatar || ''} alt={session.user.name} />
+                  <AvatarImage src={''} alt={session.user.name || 'User'} />
                   <AvatarFallback className="text-2xl">
-                    {getInitials(session.user.name)}
+                    {getInitials(session.user.name || 'User')}
                   </AvatarFallback>
                 </Avatar>
                 <Button
@@ -171,18 +171,8 @@ export default function ProfilePage() {
                 <Mail className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm">{session.user.email}</span>
               </div>
-              {session.user.phone && (
-                <div className="flex items-center space-x-3">
-                  <Phone className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm">{session.user.phone}</span>
-                </div>
-              )}
-              {session.user.department && (
-                <div className="flex items-center space-x-3">
-                  <Building className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm">{session.user.department}</span>
-                </div>
-              )}
+
+
               <div className="flex items-center space-x-3">
                 <Shield className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm">Tenant: {session.user.tenant?.name}</span>

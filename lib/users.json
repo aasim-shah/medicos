@@ -1,0 +1,99 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@medicoflow.com",
+      "password": "admin123",
+      "name": "Admin User",
+      "phone": "+1234567890",
+      "role": "admin",
+      "tenantId": "tenant1",
+      "permissions": ["read", "write", "admin", "manage_users", "manage_system"],
+      "avatar": null,
+      "department": "Administration",
+      "lastLogin": "2024-01-15T10:30:00Z",
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "email": "doctor@medicoflow.com",
+      "password": "doctor123",
+      "name": "Dr. Sarah Johnson",
+      "phone": "+1234567891",
+      "role": "doctor",
+      "tenantId": "tenant1",
+      "permissions": ["read", "write", "manage_patients", "manage_appointments"],
+      "avatar": null,
+      "department": "Cardiology",
+      "lastLogin": "2024-01-15T09:15:00Z",
+      "status": "active"
+    },
+    {
+      "id": "3",
+      "email": "reception@medicoflow.com",
+      "password": "reception123",
+      "name": "Mike Chen",
+      "phone": "+1234567892",
+      "role": "reception",
+      "tenantId": "tenant1",
+      "permissions": ["read", "write", "manage_appointments"],
+      "avatar": null,
+      "department": "Front Desk",
+      "lastLogin": "2024-01-15T08:45:00Z",
+      "status": "active"
+    },
+    {
+      "id": "4",
+      "email": "lab@medicoflow.com",
+      "password": "lab123",
+      "name": "Dr. Emily Rodriguez",
+      "phone": "+1234567893",
+      "role": "lab",
+      "tenantId": "tenant1",
+      "permissions": ["read", "write", "manage_lab_orders"],
+      "avatar": null,
+      "department": "Laboratory",
+      "lastLogin": "2024-01-15T07:30:00Z",
+      "status": "active"
+    },
+    {
+      "id": "5",
+      "email": "pharmacy@medicoflow.com",
+      "password": "pharmacy123",
+      "name": "Dr. James Wilson",
+      "phone": "+1234567894",
+      "role": "pharmacy",
+      "tenantId": "tenant1",
+      "permissions": ["read", "write", "manage_prescriptions"],
+      "avatar": null,
+      "department": "Pharmacy",
+      "lastLogin": "2024-01-15T06:15:00Z",
+      "status": "active"
+    },
+    {
+      "id": "6",
+      "email": "patient@medicoflow.com",
+      "password": "patient123",
+      "name": "John Smith",
+      "phone": "+1234567895",
+      "role": "patient",
+      "tenantId": "tenant1",
+      "permissions": ["read_own_data"],
+      "avatar": null,
+      "department": null,
+      "lastLogin": "2024-01-14T15:20:00Z",
+      "status": "active"
+    }
+  ],
+  "tenant": {
+    "id": "tenant1",
+    "name": "MedicoFlow Hospital",
+    "logo": null,
+    "primaryColor": "#3b82f6",
+    "secondaryColor": "#1e40af",
+    "address": "123 Medical Center Dr, Healthcare City, HC 12345",
+    "phone": "+1 (555) 123-4567",
+    "email": "info@medicoflow.com",
+    "website": "https://medicoflow.com"
+  }
+}

@@ -456,13 +456,16 @@ export default function PatientAppointmentsPage() {
           </TabsContent>
 
           <TabsContent value="calendar" className="space-y-4">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              <div className="lg:col-span-3">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Appointment Calendar</CardTitle>
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="lg:col-span-1">
+                <Card className="shadow-sm border-gray-200">
+                  <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 border-b border-blue-200">
+                    <CardTitle className="text-lg text-gray-900 flex items-center">
+                      <CalendarIcon className="h-5 w-5 mr-2 text-blue-600" />
+                      Appointment Calendar
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-6">
+                  <CardContent className="p-3 sm:p-4">
                     <Calendar
                       mode="single"
                       selected={selectedDate}
@@ -472,41 +475,121 @@ export default function PatientAppointmentsPage() {
                   </CardContent>
                 </Card>
               </div>
-              <div>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>
+              
+              <div className="lg:col-span-1">
+                <Card className="shadow-sm border-gray-200">
+                  <CardHeader className="bg-gradient-to-r from-green-50 to-green-100 border-b border-green-200">
+                    <CardTitle className="text-lg text-gray-900 flex items-center">
+                      <Clock className="h-5 w-5 mr-2 text-green-600" />
+                      My Stats
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-4 space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center p-3 bg-blue-50 rounded-lg">
+                        <div className="text-2xl font-bold text-blue-600">
+                          {appointments.filter(apt => apt.status === 'scheduled').length}
+                        </div>
+                        <div className="text-sm text-blue-700">Upcoming</div>
+                      </div>
+                      <div className="text-center p-3 bg-green-50 rounded-lg">
+                        <div className="text-2xl font-bold text-green-600">
+                          {appointments.filter(apt => apt.status === 'completed').length}
+                        </div>
+                        <div className="text-sm text-green-700">Completed</div>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center p-3 bg-yellow-50 rounded-lg">
+                        <div className="text-2xl font-bold text-yellow-600">
+                          {appointments.filter(apt => apt.status === 'confirmed').length}
+                        </div>
+                        <div className="text-sm text-yellow-700">Confirmed</div>
+                      </div>
+                      <div className="text-center p-3 bg-red-50 rounded-lg">
+                        <div className="text-2xl font-bold text-red-600">
+                          {appointments.filter(apt => apt.status === 'cancelled').length}
+                        </div>
+                        <div className="text-sm text-red-700">Cancelled</div>
+                      </div>
+                    </div>
+                    <div className="pt-2 border-t border-gray-200">
+                      <div className="text-center p-3 bg-purple-50 rounded-lg">
+                        <div className="text-2xl font-bold text-purple-600">
+                          {appointments.length}
+                        </div>
+                        <div className="text-sm text-purple-700">Total Appointments</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+              
+              <div className="lg:col-span-2 xl:col-span-1">
+                <Card className="shadow-sm border-gray-200">
+                  <CardHeader className="bg-gradient-to-r from-orange-50 to-orange-100 border-b border-orange-200">
+                    <CardTitle className="text-lg text-gray-900 flex items-center">
+                      <CalendarIcon className="h-5 w-5 mr-2 text-orange-600" />
                       Appointments for {selectedDate ? format(selectedDate, 'MMM dd, yyyy') : 'Today'}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-3">
+                  <CardContent className="space-y-4">
                     {getAppointmentsForDate(selectedDate || new Date()).length === 0 ? (
-                      <p className="text-muted-foreground text-center py-4">
-                        No appointments scheduled
-                      </p>
+                      <div className="text-center py-8">
+                        <CalendarIcon className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+                        <p className="text-gray-500 text-sm">
+                          No appointments scheduled
+                        </p>
+                      </div>
                     ) : (
                       getAppointmentsForDate(selectedDate || new Date()).map((appointment) => (
-                        <div key={appointment.id} className="p-3 border rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center space-x-2">
-                              <Clock className="h-4 w-4 text-muted-foreground" />
-                              <span className="font-medium">{appointment.time}</span>
+                        <div key={appointment.id} className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow">
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex items-center space-x-3">
+                              <div className="bg-orange-100 rounded-lg p-2">
+                                <Clock className="h-4 w-4 text-orange-600" />
+                              </div>
+                              <div>
+                                <span className="font-semibold text-gray-900 text-lg">{appointment.time}</span>
+                              </div>
                             </div>
                             <div className="flex items-center space-x-2">
                               {getStatusBadge(appointment.status)}
                               {getTypeBadge(appointment.type)}
                             </div>
                           </div>
-                          <div className="space-y-1">
+                          <div className="space-y-3 mb-4">
                             <div className="flex items-center space-x-2">
-                              <User className="h-4 w-4 text-muted-foreground" />
-                              <span className="font-medium">{appointment.doctor}</span>
+                              <div className="bg-blue-100 rounded-lg p-1">
+                                <User className="h-4 w-4 text-blue-600" />
+                              </div>
+                              <span className="font-medium text-gray-900">Dr. {appointment.doctor}</span>
                             </div>
                             <div className="flex items-center space-x-2">
-                              <MapPin className="h-4 w-4 text-muted-foreground" />
-                              <span className="text-sm text-muted-foreground">{appointment.location}</span>
+                              <div className="bg-purple-100 rounded-lg p-1">
+                                <MapPin className="h-4 w-4 text-purple-600" />
+                              </div>
+                              <span className="text-sm text-gray-600">{appointment.location}</span>
                             </div>
-                            <p className="text-sm text-muted-foreground">{appointment.reason}</p>
+                            <div className="bg-gray-50 rounded-lg p-3 mt-3">
+                              <p className="text-sm text-gray-700 font-medium mb-1">Reason for Visit:</p>
+                              <p className="text-sm text-gray-600">{appointment.reason}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                            <div className="flex items-center space-x-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="text-orange-600 border-orange-200 hover:bg-orange-50 hover:border-orange-300"
+                              >
+                                <Eye className="h-4 w-4 mr-1" />
+                                View Details
+                              </Button>
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              ID: {appointment.id}
+                            </div>
                           </div>
                         </div>
                       ))

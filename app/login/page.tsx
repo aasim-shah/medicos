@@ -107,125 +107,175 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center space-y-4">
-          <div className="mx-auto h-12 w-12 bg-primary rounded-xl flex items-center justify-center">
-            <Stethoscope className="h-6 w-6 text-primary-foreground" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100 p-4">
+      <div className="w-full max-w-md">
+        {/* Logo and Branding Section */}
+        <div className="text-center mb-8">
+          <div className="mx-auto h-16 w-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg mb-4">
+            <Stethoscope className="h-8 w-8 text-white" />
           </div>
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">MedicoFlow</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Sign in to your medical portal
-            </p>
-          </div>
-        </CardHeader>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">MedicoFlow</h1>
+          <p className="text-gray-600">
+            Your comprehensive medical management system
+          </p>
+        </div>
 
-        <CardContent>
+        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+          <CardHeader className="text-center space-y-4 pb-6">
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900">Welcome Back</h2>
+              <p className="text-sm text-gray-600 mt-1">
+                Sign in to access your medical portal
+              </p>
+            </div>
+          </CardHeader>
+
+        <CardContent className="pt-0">
           <Tabs defaultValue="email" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="email">Email</TabsTrigger>
-              <TabsTrigger value="phone">Phone</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 mb-6 bg-gray-100">
+              <TabsTrigger value="email" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">
+                <Mail className="h-4 w-4 mr-2" />
+                Email
+              </TabsTrigger>
+              <TabsTrigger value="phone" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">
+                <Phone className="h-4 w-4 mr-2" />
+                Phone
+              </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="email" className="space-y-4">
-              <form onSubmit={emailForm.handleSubmit(handleEmailLogin)} className="space-y-4">
+            <TabsContent value="email" className="space-y-5">
+              <form onSubmit={emailForm.handleSubmit(handleEmailLogin)} className="space-y-5">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
                       id="email"
                       type="email"
-                      placeholder="Enter your email"
-                      className="pl-10"
+                      placeholder="Enter your email address"
+                      className="pl-10 h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
                       {...emailForm.register('email')}
                     />
                   </div>
                   {emailForm.formState.errors.email && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-sm text-red-600">
                       {emailForm.formState.errors.email.message}
                     </p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password" className="text-sm font-medium text-gray-700">Password</Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
                       id="password"
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Enter your password"
-                      className="pl-10 pr-10"
+                      className="pl-10 pr-10 h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
                       {...emailForm.register('password')}
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="absolute right-0 top-0 h-full px-3"
+                      className="absolute right-0 top-1/2 -translate-y-1/2 h-full px-3 hover:bg-transparent"
                       onClick={() => setShowPassword(!showPassword)}
                     >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      {showPassword ? <EyeOff className="h-4 w-4 text-gray-400" /> : <Eye className="h-4 w-4 text-gray-400" />}
                     </Button>
                   </div>
                   {emailForm.formState.errors.password && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-sm text-red-600">
                       {emailForm.formState.errors.password.message}
                     </p>
                   )}
                 </div>
 
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? 'Signing in...' : 'Sign In'}
+                <Button 
+                  type="submit" 
+                  className="w-full h-11 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium" 
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Signing in...
+                    </>
+                  ) : (
+                    'Sign In'
+                  )}
                 </Button>
               </form>
             </TabsContent>
 
-            <TabsContent value="phone" className="space-y-4">
-              <form onSubmit={phoneForm.handleSubmit(handlePhoneLogin)} className="space-y-4">
+            <TabsContent value="phone" className="space-y-5">
+              <form onSubmit={phoneForm.handleSubmit(handlePhoneLogin)} className="space-y-5">
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="phone" className="text-sm font-medium text-gray-700">Phone Number</Label>
                   <div className="relative">
-                    <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
                       id="phone"
                       type="tel"
                       placeholder="Enter your phone number"
-                      className="pl-10"
+                      className="pl-10 h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
                       {...phoneForm.register('phone')}
                     />
                   </div>
                   {phoneForm.formState.errors.phone && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-sm text-red-600">
                       {phoneForm.formState.errors.phone.message}
                     </p>
                   )}
                 </div>
 
                 {!otpSent ? (
-                  <Button type="button" onClick={handleSendOTP} className="w-full" disabled={isLoading}>
-                    {isLoading ? 'Sending...' : 'Send OTP'}
+                  <Button 
+                    type="button" 
+                    onClick={handleSendOTP} 
+                    className="w-full h-11 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium" 
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Sending...
+                      </>
+                    ) : (
+                      'Send OTP'
+                    )}
                   </Button>
                 ) : (
                   <>
                     <div className="space-y-2">
-                      <Label htmlFor="otp">Enter OTP</Label>
+                      <Label htmlFor="otp" className="text-sm font-medium text-gray-700">Enter OTP</Label>
                       <Input
                         id="otp"
                         placeholder="Enter 6-digit OTP"
+                        className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500 text-center tracking-wider"
                         {...phoneForm.register('otp')}
                       />
                       {phoneForm.formState.errors.otp && (
-                        <p className="text-sm text-destructive">
+                        <p className="text-sm text-red-600">
                           {phoneForm.formState.errors.otp.message}
                         </p>
                       )}
                     </div>
 
-                    <Button type="submit" className="w-full" disabled={isLoading}>
-                      {isLoading ? 'Verifying...' : 'Verify OTP'}
+                    <Button 
+                      type="submit" 
+                      className="w-full h-11 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium" 
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                          Verifying...
+                        </>
+                      ) : (
+                        'Verify OTP'
+                      )}
                     </Button>
                   </>
                 )}
@@ -234,21 +284,30 @@ export default function LoginPage() {
           </Tabs>
 
           {error && (
-            <Alert className="mt-4" variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
+            <Alert className="mt-6 border-red-200 bg-red-50">
+              <AlertDescription className="text-red-700">{error}</AlertDescription>
             </Alert>
           )}
         </CardContent>
 
-        <CardFooter className="flex flex-col space-y-2 text-center">
-          <Link href="/forgot-password" className="text-sm text-primary hover:underline">
+        <CardFooter className="flex flex-col space-y-3 text-center pt-6">
+          <Link 
+            href="/forgot-password" 
+            className="text-sm text-blue-600 hover:text-blue-700 hover:underline font-medium transition-colors"
+          >
             Forgot your password?
           </Link>
-          <p className="text-xs text-muted-foreground">
-            Need access? Contact your system administrator
-          </p>
+          <div className="pt-4 border-t border-gray-100">
+            <p className="text-xs text-gray-500">
+              Need access? Contact your system administrator
+            </p>
+            <p className="text-xs text-gray-400 mt-1">
+              Secure medical portal powered by MedicoFlow
+            </p>
+          </div>
         </CardFooter>
-      </Card>
+        </Card>
+      </div>
     </div>
   )
 }

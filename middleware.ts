@@ -35,9 +35,12 @@ export default withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
         // Allow access to login and public pages
-        if (req.nextUrl.pathname.startsWith('/login') || 
+        if (req.nextUrl.pathname === '/' ||
+            req.nextUrl.pathname.startsWith('/login') || 
             req.nextUrl.pathname.startsWith('/forgot-password') ||
-            req.nextUrl.pathname.startsWith('/api/auth')) {
+            req.nextUrl.pathname.startsWith('/auth') ||
+            req.nextUrl.pathname.startsWith('/api/auth') ||
+            req.nextUrl.pathname.startsWith('/reset-password')) {
           return true
         }
         

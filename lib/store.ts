@@ -70,7 +70,7 @@ interface UIState {
 
 export const useUIStore = create<UIState>()((set, get) => ({
   sidebarOpen: true,
-  theme: 'system',
+  theme: 'light',
   notifications: [],
   setSidebarOpen: (open) => set({ sidebarOpen: open }),
   setTheme: (theme) => set({ theme }),
